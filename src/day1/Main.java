@@ -24,14 +24,19 @@ public class Main {
     private static List<Integer> toMatchingNext() {
         List<Integer> output = new ArrayList<>();
         List<Integer> input = toIntArray();
-        IntStream.range(0, input.size() - 1)
-                .filter(i -> Objects.equals(input.get(i), input.get(i + 1)))
+        IntStream.range(0, input.size())
+                .filter(i -> compare(i, i+1))
                 .map(input::get)
                 .forEach(output::add);
-        if (Objects.equals(input.get(input.size() - 1), input.get(0))) {
-            output.add(input.get(input.size() - 1));
-        }
         return output;
+    }
+
+    private static boolean compare(int x, int y){
+        List<Integer> input = toIntArray();
+        if (y >= input.size()){
+            y = y - input.size();
+        }
+        return Objects.equals(input.get(x), input.get(y));
     }
 
     private static Integer sum() {
