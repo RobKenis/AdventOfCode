@@ -25,7 +25,7 @@ public class Main {
         List<Integer> output = new ArrayList<>();
         List<Integer> input = toIntArray();
         IntStream.range(0, input.size())
-                .filter(i -> compare(i, i+1))
+                .filter(i -> compare(i, i+(input.size()/2)))
                 .map(input::get)
                 .forEach(output::add);
         return output;
@@ -35,6 +35,9 @@ public class Main {
         List<Integer> input = toIntArray();
         if (y >= input.size()){
             y = y - input.size();
+        }
+        if (y < 0){
+            y = (input.size()-1) - y;
         }
         return Objects.equals(input.get(x), input.get(y));
     }
