@@ -1,6 +1,8 @@
 package day4;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -540,6 +542,17 @@ public class Main {
     }
 
     private static Predicate<List<String>>uniqueWords(){
-        return list -> list.stream().distinct().mapToInt(word -> 1).sum() == list.size();
+        return list -> list.stream()
+                .map(order())
+                .distinct()
+                .mapToInt(word -> 1).sum() == list.size();
+    }
+
+    private static Function<String, String> order(){
+        return input -> {
+            char[] word = input.toCharArray();
+            Arrays.sort(word);
+            return String.valueOf(word);
+        };
     }
 }
