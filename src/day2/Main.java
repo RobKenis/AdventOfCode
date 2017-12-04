@@ -3,8 +3,10 @@ package day2;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.util.Arrays.asList;
 
@@ -44,7 +46,7 @@ public class Main {
                 .collect(Collectors.toList());
     }
 
-    private static Function<List<Integer>, Integer> difference(){
+    private static Function<List<Integer>, Integer> difference() {
         return integers -> {
             Integer max = integers.stream().mapToInt(i -> i).max().getAsInt();
             Integer min = integers.stream().mapToInt(i -> i).min().getAsInt();
@@ -52,9 +54,18 @@ public class Main {
         };
     }
 
-    private static Integer sumOfRows(){
+    private static Function<List<Integer>, Integer> division() {
+        return integers -> integers.stream()
+                .flatMap(i -> integers.stream()
+                        .filter(j -> !Objects.equals(i, j))
+                        .filter(j -> i%j == 0)
+                        .map(j -> i / j ))
+                .flatMapToInt(IntStream::of).findAny().getAsInt();
+    }
+
+    private static Integer sumOfRows() {
         return toIntListList().stream()
-                .map(difference())
+                .map(division())
                 .mapToInt(i -> i)
                 .sum();
     }
